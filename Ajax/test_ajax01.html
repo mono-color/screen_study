@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	/* function fn_ajax01() {
+		console.log("fn_ajax01:::");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax01.do",
+			type : "post",
+			data : {
+				name : "jQuery",
+				lecture : "Ajax"
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function(e) {
+				alert("error");
+				console.log("e.status:::::" + e.status);
+			}
+		});
+	} */
+	function fn_ajax00() {
+		alert("fn_ajax00");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax00.do" //http://localhost:8080/ <-이 생략이 되어있다라고.ㅎ
+			,
+			type : "post",
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+	function fn_ajax01() {
+		alert("fn_ajax01");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax01.do",
+			type : "post",
+			data : {
+				name : "jQuery",
+				lecture : "Ajax"
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+	/* function fn_ajax02(){
+		alert("fn_ajax02");
+		$.ajax({
+			url:"/sample01_ajax/fn_ajax02.do"
+			,type:"post"
+			,data:{name:"jQuery", lecture:"Ajax"}
+			,contentType:"application/x-www-form-urlencoded; charset=utf-8"
+			,success : function(){
+				alert("success");
+			}
+			,error : function(){
+				alert("error");
+			}
+		});
+	} */
+	let name01 = "NextIT";
+	let lecture = "화면구현";
+	function fn_ajax02() {
+		alert("fn_ajax02");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax02.do",
+			type : "post"
+			//,data:{name:"jQuery", lecture:"Ajax"}
+			,
+			data : {
+				name : name01,
+				lecture : lecture
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+	//Object
+	let centerInfo = {};
+	centerInfo.name = "NextIT";
+	centerInfo.lecture = "화면구현";
+	centerInfo.region = "Daejeon";
+	centerInfo.tel = "042-719-8850";
+	function fn_ajax03() {
+		alert("fn_ajax03");
+		console.log("centerInfo : " + centerInfo);
+		console.log("JSON.stringify(centerInfo): ", JSON.stringify(centerInfo));
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax03.do",
+			type : "post",
+			data : {
+				center_info : JSON.stringify(centerInfo)
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+
+	function fn_ajax03_1() {
+		alert("fn_ajax03_1");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax03_1.do",
+			type : "post",
+			data : JSON.stringify(centerInfo),
+			contentType : "application/json; charset=UTF-8;",
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+
+	let centerInfoArr = [ "NextIT", "화면구현", "Daejeon", "042-719-8850" ];
+
+	function fn_ajax04() {
+		alert("fn_ajax04");
+		console.log("centerInfoArr: " + centerInfoArr);
+		console.log("jsonArr: " + JSON.stringify(centerInfoArr));
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax04.do",
+			type : "post",
+			data : {
+				centerInfoArr : JSON.stringify(centerInfoArr)
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+
+	function fn_ajax04_1() {
+		alert("fn_ajax04_1");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax04_1.do",
+			type : "post",
+			data : {
+				centerArr : centerInfoArr
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+
+	let lecture_01 = [ "8850", "NextIT", "화면구현", "Daejeon", "042-719-8850" ];
+	let lecture_02 = [ "8850", "NextIT", "화면구현", "Daejeon", "042-719-8850" ];
+
+	let centerlecture = {};
+	centerlecture.lecture01 = lecture_01;
+	centerlecture.lecture02 = lecture_02;
+
+	function fn_ajax05() {
+		alert("fn_ajax05");
+		console.log("centerlecture", centerlecture);
+		console.log("centerlecture.stringify(centerlecture)", JSON
+				.stringify(centerlecture));
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax05.do",
+			type : "post",
+			data : {
+				center_lecture : JSON.stringify(centerlecture)
+			},
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax05_1(){
+		alert("fn_ajax05_1");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax05_1.do",
+			type : "post",
+			data : JSON.stringify(centerlecture),
+			contentType:"application/json; charset=utf-8",
+			success : function() {
+				alert("success");
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax06(){
+		alert("fn_ajax_06");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax06.do",
+			type : "post",
+			dataType : "text",
+			success : function(sw) {
+				alert("success");
+				alert(sw);
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax06_1(){
+		alert("fn_ajax_06_1");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax06.do",
+			type : "post",
+			dataType: "json",
+			success : function(sw) {
+				alert("success");
+				alert(sw);
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax07(){
+		alert("fn_ajax_07");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax07.do",
+			type : "post",
+			dataType: "text",
+			success : function(result) {
+				alert("success");
+				console.log("result: " + result);
+				let data = JSON.parse(result);
+				console.log("data: ", data);
+				data = JSON.parse(data);
+				console.log("data_2: ", data);
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax07_1(){
+		alert("fn_ajax_07_1");
+		$.ajax({
+			url : "/sample01_ajax/fn_ajax07.do",
+			type : "post",
+			dataType: "json",
+			success : function(result) {
+				alert("success");
+				console.log("result: " + result);
+				let data = JSON.parse(result);
+				console.log("data: ", data);
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	function fn_ajax08(){
+		alert("fn_ajax08");
+		$.ajax({
+			url:"/sample01_ajax/fn_ajax08.do",
+			type : "post",
+			success : function(data){
+				alert("success");
+				console.log("data", data);
+				console.log("name", data.name);
+				console.log("center_no", data.center_no);
+			},
+			error : function() {
+				alert("error");
+			}
+		})
+	}
+	
+	
+</script>
+</head>
+<body>
+	<h3>test_ajax01페이지 입니다.</h3>
+	<input type="button" onclick="fn_ajax00()" value="fn_ajax00">
+	<input type="button" onclick="fn_ajax01()" value="fn_ajax01">
+	<input type="button" onclick="fn_ajax02()" value="fn_ajax02">
+	<input type="button" onclick="fn_ajax03()" value="fn_ajax03">
+	<input type="button" onclick="fn_ajax03_1()" value="fn_ajax03_1">
+	<input type="button" onclick="fn_ajax04()" value="fn_ajax04">
+	<input type="button" onclick="fn_ajax04_1()" value="fn_ajax04_1">
+	<input type="button" onclick="fn_ajax05()" value="fn_ajax05">
+	<input type="button" onclick="fn_ajax05_1()" value="fn_ajax05_1">
+	<input type="button" onclick="fn_ajax06()" value="fn_ajax06">
+	<input type="button" onclick="fn_ajax06_1()" value="fn_ajax06_1">
+	<input type="button" onclick="fn_ajax07()" value="fn_ajax07">
+	<input type="button" onclick="fn_ajax07_1()" value="fn_ajax07_1">
+	<input type="button" onclick="fn_ajax08()" value="fn_ajax08">
+</body>
+</html>
