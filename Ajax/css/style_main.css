@@ -1,0 +1,531 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  list-style: none;
+  text-decoration: none;
+  margin: 0 auto;
+  padding: 0;
+  color: black;
+}
+
+.intro_bg {
+  width: 100%;
+  height: 720px;
+  background-color: aquamarine;
+}
+.header {
+  width: 1280px;
+  height: 86px;
+  background-color: red;
+  display: flex;
+}
+.nav {
+  display: flex;
+}
+.nav > li {
+  margin-left: 84px;
+}
+.nav > li > a {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+.searchArea {
+  width: 320px;
+  height: 40px;
+  background-color: green;
+  margin-top: 30px;
+}
+.nav {
+  margin-top: 30px;
+}
+.nav a:hover {
+  color: lime;
+}
+.nav li ul {
+  margin-left: 10px;
+  display: none;
+}
+.nav li:hover ul {
+  display: block;
+  animation: fade-in 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.nav a {
+  color: white;
+  font-size: 18px;
+  margin-top: 5px;
+}
+.searchArea > form > span {
+  width: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.searchArea > form > input {
+  /* background-color: aqua; */
+  width: 250px;
+  height: 25px;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  background: rgba(0, 0, 0, 1);
+  padding-left: 15px;
+}
+
+.intro_text {
+  width: 100%;
+  background-color: violet;
+  text-align: center;
+  position: relative;
+  top: 300px;
+}
+.intro_text > h1,
+.intro_text > h4 {
+  color: white;
+}
+.intro_bg {
+  background-image: url(../images/img102.jpg);
+  background-size: 100% 720px;
+}
+.header,
+.nav,
+.searchArea,
+.intro_text {
+  background-color: transparent;
+}
+
+/*1차 intro_bg e ==========*/
+
+.sub_title {
+  width: 1280px;
+  height: 130px;
+  background-color: tomato;
+  display: flex;
+  position: relative;
+  top: -65px;
+}
+
+.sub_title > li > div {
+  background-color: violet;
+  width: 315px;
+  height: 120px;
+  margin-top: 5px;
+  text-align: center;
+}
+.sub_title > li > div > h2 {
+  padding-top: 30px;
+}
+.sub_title > li > div {
+  background-color: white;
+}
+.sub_title {
+  background-color: white;
+}
+.sub_title {
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+.sub_title > li:not(li:last-child) > div {
+  border-right: 1px solid gray;
+}
+
+.main_text0 {
+  width: 100%;
+  height: 620px;
+  background-color: aqua;
+  margin-top: 130px;
+}
+.main_text0 > h1 {
+  text-align: center;
+  padding-top: 100px;
+  font-size: 60px;
+}
+.main_text0 > p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 25px;
+}
+.main_text0 > ul {
+  display: flex;
+  width: 1280px;
+  height: 302px;
+  background-color: tomato;
+  padding-top: 30px;
+}
+.icons > li {
+  background-color: lightgrey;
+  width: 400px;
+  text-align: center;
+}
+.main_text0 {
+  background-color: #f0f3f5;
+}
+.main_text0 > ul {
+  background-color: transparent;
+}
+.icons > li {
+  background-color: #8ce7f7;
+}
+.contents1_bold > p {
+  font-size: 25px;
+  font-weight: bold;
+}
+.more {
+  background-color: blue;
+  width: 100px;
+  height: 30px;
+  color: white;
+  padding-top: 3px;
+  margin: 25px auto;
+}
+/* 3차 작업 끝 */
+
+.main_text1 {
+  width: 100%;
+  height: 700px;
+  background-color: seagreen;
+}
+.main_text1 > h1 {
+  text-align: center;
+  font-size: 60px;
+  padding-top: 30px;
+}
+.contents2 > p {
+  text-align: center;
+  font-size: 25px;
+  padding-top: 20px;
+}
+.service {
+  display: flex;
+  background-color: tomato;
+  width: 1280px;
+  height: 440px;
+  margin-top: 20px;
+}
+.service > div > img {
+  width: 640px;
+  height: 440px;
+}
+.service > div:last-child {
+  background-color: lightyellow;
+  padding-top: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: justify;
+}
+.service > div {
+  flex: 5;
+}
+.service > div h2 {
+  font-size: 30px;
+  padding-bottom: 10px;
+}
+.service > div p {
+  text-align: center;
+  font-size: 20px;
+}
+.main_text1 {
+  background-color: white;
+}
+/* 4차 main_text1 */
+
+.main_text2 > ul {
+  width: 100%;
+  height: 500px;
+  background-color: violet;
+  display: flex;
+}
+.main_text2 > ul > li {
+  width: 50%;
+}
+.main_text2 > ul > li:first-child {
+  background-color: aliceblue;
+}
+.main_text2 > ul > li:last-child {
+  background-color: cornflowerblue;
+}
+.main_text2 > ul > li:first-child > div {
+  width: 100%;
+  height: 500px;
+  background-color: coral;
+  text-align: center;
+}
+.main_text2 > ul > li:last-child > div {
+  width: 100%;
+  height: 500px;
+  background-color: yellowgreen;
+  text-align: center;
+}
+
+.main_text2 > ul > li > div > h1 {
+  padding-top: 160px;
+}
+.main_text2 h1,
+.main_text2 p,
+.more2 {
+  color: white;
+  padding-bottom: 20px;
+}
+.more2 {
+  border: 1px solid #fff;
+  width: 150px;
+  height: 20px;
+}
+.more2 > p {
+  padding-top: 7px;
+  cursor: pointer;
+}
+.last_bg1 {
+  background-image: url("../images/img1.jpg");
+  background-size: 100% 500px;
+}
+.last_bg2 {
+  background-image: url("../images/img2.jpg");
+  background-size: 100% 500px;
+}
+.last_bg1:hover {
+  opacity: 0.7;
+}
+.last_bg2:hover {
+  opacity: 0.7;
+}
+.main_text2 > ul > li {
+  background-color: black !important;
+}
+
+/* 5차 작업 main_text02 끝 */
+
+/* 반응형 */
+
+/* 화면 너비가 0부터 1220px 일 때 */
+@media (max-width: 1220px) {
+  #wrap {
+    width: 95%;
+  }
+  .header {
+    width: 100%;
+  }
+  .nav > li {
+    margin-left: 30px;
+  }
+  .sub_title {
+    width: 95%;
+    /* background-color: tomato; */
+  }
+  .sub_title > li > div {
+    width: 250px;
+  }
+  .sub_title {
+    background-color: red;
+  }
+  .main_text0 > ul {
+    width: 95%;
+    background-color: blueviolet;
+  }
+  .icon > li {
+    width: 340px;
+  }
+  .main_text0 > ul {
+    background-color: blue;
+  }
+  .service {
+    width: 95%;
+  }
+}
+#menuicon,
+.header_icon {
+  display: none;
+}
+
+/* 화면 너비가 0부터 930일 때 */
+@media (max-width: 930px) {
+  .nav {
+    display: none;
+  }
+  .searchArea {
+    margin: 0;
+  }
+  .input_serach {
+    width: 200px;
+    margin-top: 20;
+    margin-left: 20px;
+  }
+  input[id="menuicon"] + label {
+    display: block;
+    width: 30px;
+    height: 20px;
+    background-color: red;
+    position: fixed;
+    right: 30px;
+    top: 25px;
+    cursor: pointer;
+  }
+  input[id="menuicon"] + label > span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: white;
+  }
+  input[id="menuicon"] + label span:nth-child(1) {
+    position: absolute;
+    top: 0;
+  }
+  input[id="menuicon"] + label span:nth-child(2) {
+    position: absolute;
+    top: calc(50% - 2px);
+  }
+  input[id="menuicon"] + label span:nth-child(3) {
+    position: absolute;
+    bottom: 0;
+  }
+
+  /* 클릭이 되었을 때 X표시 변경,
+  label에 input 태그를 걸었기 때문에 라벨을 클릭하면 
+  input 태그의 checkbox가 체크 됩니다. 따라서 input 태그가
+  체크된 상황이라면 라벨 태그 하위에 
+  span태그에 애니메이션을 주려고 합니다.
+  */
+  input[id="menuicon"]:checked + label span:nth-child(1) {
+    top: 50%;
+    transform: rotate(45deg);
+  }
+  input[id="menuicon"]:checked + label span:nth-child(2) {
+    opacity: 0;
+  }
+  input[id="menuicon"]:checked + label span:nth-child(3) {
+    top: 50%;
+    transform: rotate(-45deg);
+  }
+  .header_icon {
+    display: block;
+  }
+
+  .header_icon {
+    width: 300px;
+    height: 100%;
+    background-color: #222;
+    position: fixed;
+    right: -300px;
+    z-index: 1;
+  }
+  /* x를 만들면 우측 nav 창이 나오도록 처리 */
+  input[id="menuicon"]:checked + label + div {
+    right: 0px;
+  }
+  input[id="menuicon"] + label {
+    z-index: 2;
+    background-color: transparent;
+  }
+  input[id="menuicon"] + label span {
+    border-radius: 30px;
+    transition: all 0.3s;
+  }
+  .header_icon {
+    transition: all 0.3s;
+  }
+  .menu {
+    width: 250px;
+    height: 500px;
+    background-color: aliceblue;
+    margin: 100px auto;
+  }
+  .menu > li {
+    padding-top: 20px;
+    padding-left: 40px;
+  }
+  .menu > li > a {
+    color: white;
+  }
+  .menu {
+    background-color: transparent;
+  }
+  .sub_title {
+    width: 95%;
+    height: 260px;
+    background-color: tomato;
+    display: block;
+  }
+  .sub_title > li {
+    display: inline-block;
+    width: 350px;
+  }
+  .sub_title {
+    text-align: center;
+    background-color: white;
+  }
+  .sub_title > li > div {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  .main_text1 {
+    height: 1100px;
+    background-color: thistle;
+  }
+  .service {
+    display: block;
+    width: 100%;
+    height: 880px;
+    background-color: aquamarine;
+  }
+  .service > div:first-child > img {
+    width: 100%;
+  }
+  .contents3 {
+    height: 44px;
+  }
+  .main_text1,
+  .service {
+    background-color: white;
+  }
+}
+
+/* 화면 너비가 0부터 550px */
+@media (max-width: 550px) {
+  /* #wrap {
+    width: 100%;
+  } */
+  .sub_title {
+    background-color: white;
+    height: 510px;
+    display: block;
+  }
+  .sub_title > li > div {
+    width: 300px;
+  }
+  .main_text0 {
+    height: 1220px;
+    background-color: lightblue;
+  }
+  .main_text0 > ul {
+    display: block;
+    height: 900px;
+    background-color: tomato;
+  }
+  .main_text0 > ul > li {
+    width: 400px;
+  }
+  .sub_title,
+  .main_text0,
+  .main_text0 > ul {
+    background-color: white;
+  }
+  .main_text2 > ul {
+    display: block;
+    height: 1000px;
+  }
+  .main_text2 > ul > li {
+    width: 100%;
+  }
+  .div_footer {
+    height: 200px !important;
+  }
+}

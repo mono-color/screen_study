@@ -1,0 +1,162 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+body{
+    /* 1vh는 높이값의 100분 1단위입니다.
+        예를 들어 브라우저 높이값이 900px
+        일때 1vh 는 9px라는 뜻입니다.
+    */
+    height: 100vh;
+    background-color: red;
+    text-align: center;
+}
+
+.login_form{
+    position: relative;
+    top: 50%;
+    width: 400px;
+    background-color: lightskyblue;
+}
+
+.login_form > h1 {
+    color: white;
+}
+
+.int-area{
+    width: 400px;
+    background-color: lightsalmon;
+}
+
+.int-area input{
+    width: 100%;
+    padding: 40px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 18px;
+    color: #fff;
+}
+
+/* 클릭 되었을때 테두리 안보이게 처리*/
+.int-area input:focus{
+    outline:none; 
+}
+
+.int-area > label{
+    font-size: 18px;
+    color: white;
+}
+
+/* (ID) label 위치잡기 */
+.login_form label[for="mem_id"]{
+    position: absolute;
+    top: 50px;
+    left: 10px;
+}
+
+/* (PW) label 위치잡기 */
+.login_form label[for="mem_pw"]{
+    position: absolute;
+    top: 120px;
+    left: 10px;
+}
+
+.btn-area > button{
+    width: 420px;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #166cea;
+    margin-top: 30px;
+    padding: 0 10px 0;
+}
+
+/* join, forgotpw  */
+.caption_ul > li{
+    list-style: none;
+    font-size: 20px;
+}
+.caption_ul{
+    display: flex;
+    margin-top: 20px;
+}
+.caption a{
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+body{
+    background: url("../images/img1.jpg") no-repeat center;
+    background-size: cover;
+}
+body, .login_form, .int-area{
+    background-color: transparent;
+}
+body::before{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/*(ID)input이 클릭될때 label 태그 css 먹이기  */
+.int-area input[name='mem_id']:focus + label{
+    top: 50px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+/*(PW)input이 클릭될때 label 태그 css 먹이기  */
+.int-area input[name='mem_pw']:focus + label{
+    top: 120px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+.int-area label{
+    transition: all .5s ease;
+    /* transition: all 은 top으로 이동될때
+        모든 옵션(all)에 대해서 애니매이션 효과를 발생
+        0.5초동안 ease 효과가 천천히 시작되어 
+        중간에 빨라지고 다시 느려짐
+    */
+}
+
+/* 입력값이 있을 경우 label태그는 고정하기 */
+.int-area input[name='mem_id']:valid + label{
+    top: 50px;
+    font-size: 13px;
+    color: #166cea;
+}
+.int-area input[name='mem_pw']:valid + label{
+    top: 120px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+/* 버튼클릭액션 */
+#btn_id:active{
+	color: gray;
+}
+
+.caption_ul a:active{
+    color: gray !important;
+}
+
+/*( .login_form{} )화면깨짐 방지하기 위해서 기존 position: relative를 fixed로 변경 */
+.login_form{
+    position: fixed;
+    left: calc( 50% - 200px); /* 꼭 "-" 앞뒤로 공백넣기*/
+}
+
+/* id, pw 입력안했을 경우  */
+.int-area label.warning{
+    color: red;
+    /*animation-duration은 애니메이션이 한 사이클을
+         완료하는데 걸리는 시간을 지정합니다. */
+    animation-duration: .3s ease;
+}
