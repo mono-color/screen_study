@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>NextIT</title>
+<link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg" />
+<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/footer.css">
+<link rel="stylesheet" type="text/css" href="./css/style_boardWrite.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(function() {
+		/* $(".top_nav").load("./header.html");
+		$("#page_footer").load("./footer.html"); */
+		$(".top_nav").load("/sample01_ajax/header.do");
+		$("#page_footer").load("/sample01_ajax/footer.do");
+	});
+	function fn_submit() {
+
+		/* let notice_title = document.getElementById('notice_title').value;
+		let notice_content = document.getElementById('notice_content').value;
+		let notice_gender = document.getElementById('gender').value;
+		let notice_job = document.querySelector("input[name='job']:checked").value;
+		let region = document.querySelectorAll("input[name='region']:checked");
+		let notice_region = [];
+		console.log(region.length);
+		for (let i = 0; i < region.length; i++) {
+			// console.log(region[i].value);
+			notice_region.push(region[i].value);
+		}
+
+		let output01 = '';
+
+		output01 += "제목:::::" + notice_title + "\n";
+		output01 += "내용:::::" + notice_content + "\n";
+		output01 += "성별:::::" + notice_gender + "\n";
+		output01 += "직업:::::" + notice_job + "\n";
+		output01 += "지역:::::" + notice_region + "\n";
+		console.log(output01); 
+		
+		// 필요조건 : 제목, 내용, 성별, 내용, 성별, 직업, 지역, 작성자, 작성시간
+		 let write_num = 1;
+		let notice_title = $("#notice_title").val();
+		let notice_content = $("#notice_content").val();
+		let notice_gender = $("#gender").val();
+		let notice_job = $("input[name='job']:checked").val();
+		
+		let notice_region = [];
+		let region = $("input[name='region']:checked");
+		region.each(function(){
+			notice_region.push($(this).val());
+		})
+		console.log("notice_title" , notice_title);
+		console.log("notice_content" , notice_content);
+		console.log("notice_gender" , notice_gender);
+		console.log("notice_job" ,notice_job );
+		console.log("notice_region" ,notice_region );
+		
+		//작성자
+		let mem_id = sessionStorage.getItem("mem_id");
+		console.log("mem_id: ", mem_id);
+		
+		//작성시간
+		let current_date = new Date();
+		current_date = current_date.toLocaleStorage();
+		console.log("current_date: ", current_date);
+		
+		let boardWrite ={};
+		boardWrite.write_num = write_num;
+		boardWrite.notice_title = notice_title;
+		boardWrite.notice_content = notice_content;
+		boardWrite.notice_gender = notice_gender;
+		boardWrite.notice_job = notice_job;
+		boardWrite.notice_region = notice_region;
+		boardWrite.mem_id = mem_id;
+		boardWrite.write_date = current_date;
+		
+		console.log("boardWrite",boardWrite);
+		
+		let boardList = JSON.stringify(boardWrite);
+		console.log("boardList",boardList);
+		
+		localStorage.setItem("boardList", boardList);
+		
+		alert("등록이 완료되었습니다.");
+		location.href = "/sample01_ajax/board_list.do"; */ 
+		
+		// 여러개 글처리
+		//let write_num = 1;
+		let write_num = localStorage.getItem("write_num");
+		if(write_num === null || write_num === undefined || write_num === ""){
+			write_num = 1;
+		} else{
+			write_num = parseInt(write_num)+1;
+		}
+		console.log("write_num: ", write_num);
+		
+		let notice_title = $("#notice_title").val();
+		let notice_content = $("#notice_content").val();
+		let notice_gender = $("#gender").val();
+		let notice_job = $("input[name='job']:checked").val();
+		
+		let notice_region = [];
+		let region = $("input[name='region']:checked");
+		region.each(function(){
+			notice_region.push($(this).val());
+		})
+		console.log("notice_title" , notice_title);
+		console.log("notice_content" , notice_content);
+		console.log("notice_gender" , notice_gender);
+		console.log("notice_job" ,notice_job );
+		console.log("notice_region" ,notice_region );
+		
+		//작성자
+		let mem_id = sessionStorage.getItem("mem_id");
+		console.log("mem_id: ", mem_id);
+		
+		//작성시간
+		let current_date = new Date();
+		current_date = current_date.toLocaleDateString()
+		console.log("current_date: ", current_date);
+		
+		let boardWrite ={};
+		boardWrite.write_num = write_num;
+		boardWrite.notice_title = notice_title;
+		boardWrite.notice_content = notice_content;
+		boardWrite.notice_gender = notice_gender;
+		boardWrite.notice_job = notice_job;
+		boardWrite.notice_region = notice_region;
+		boardWrite.mem_id = mem_id;
+		boardWrite.write_date = current_date;
+		
+		console.log("boardWrite",boardWrite);
+		
+		let boardArray = localStorage.getItem("boardList");
+		if(boardArray === null|| boardArray === undefined || boardArray ===""){
+			boardArray = [];
+		}else{
+			boardArray = JSON.parse(boardArray);
+		}
+		console.log(boardArray);
+		boardArray.push(boardWrite);
+		console.log("boardArray : ", boardArray);
+		
+		let boardList = JSON.stringify(boardArray);
+		console.log("boardList : ", boardList);
+		
+		localStorage.setItem("boardList", boardList);
+		
+		/* boardList = JSON.stringify(boardList);
+		console.log("boardList",boardList);
+		
+		localStorage.setItem("boardList", boardList); */
+		
+		alert("등록이 완료되었습니다.");
+		location.href = "/sample01_ajax/board_list.do";
+		
+	}
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<div class="header">
+			<div class="top_nav">
+				<!-- header 영역 -->
+			</div>
+		</div>
+		<!-- header e -->
+
+		<div class="intro_bg">
+			<div class="intro_text">
+				<h1>NextIT</h1>
+				<h4>넥스트아이티</h4>
+			</div>
+		</div>
+		<!-- intro_bg e -->
+
+		<!-- 전체 영역잡기 -->
+		<div class="contents">
+			<!-- 사용할 영역잡기 -->
+			<div class="content01">
+				<div class="content01_h1">
+					<h1>공지사항</h1>
+				</div>
+				<form action="" id="editor_form" method="post">
+					<div id="div_table">
+						<table>
+							<colgroup>
+								<col width="200">
+								<col width="400">
+							</colgroup>
+							<tr>
+								<td class="td_left">제목</td>
+								<td class="td_right"><input type="text" id="notice_title"
+									maxlength="30" value=""></td>
+							</tr>
+							<tr>
+								<td class="td_left">내용</td>
+								<td class="td_right">
+									<!-- textAread 공백 주의 --> <textarea id="notice_content"
+										name="notice_content" cols="30" rows="10"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td class="td_left">성별</td>
+								<td class="td_right"><select name="gender" id="gender">
+										<option value="men" selected>남성</option>
+										<option value="women">여성</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td class="td_left">직업</td>
+								<td class="td_right"><label for="student"> <input
+										type="radio" name="job" id="student" value="student" checked>학생&nbsp;&nbsp;&nbsp;
+								</label> <label for="teacher"> <input type="radio" name="job"
+										id="teacher" value="teacher">선생님&nbsp;&nbsp;&nbsp;
+								</label> <label for="developer"> <input type="radio" name="job"
+										id="developer" value="developer">개발자&nbsp;&nbsp;&nbsp;
+								</label></td>
+							</tr>
+							<tr>
+								<td class="td_left">지역</td>
+								<td class="td_right"><label for="Seoul"> <input
+										type="checkbox" name="region" id="Seoul" value="Seoul" checked>서울
+								</label> <label for="Daejeon"> <input type="checkbox"
+										name="region" id="Daejeon" value="Daejeon">대전
+								</label> <label for="Gwangju"> <input type="checkbox"
+										name="region" id="Gwangju" value="Gwangju">광주
+								</label></td>
+							</tr>
+						</table>
+					</div>
+					<!-- 버튼 -->
+					<div id="div_button">
+						<input type="button" value="목록"> <input type="button"
+							onclick="javascript:fn_submit()" value="등록"> <input
+							type="button" value="수정"> <input type="button" value="삭제">
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<footer id="page_footer">
+			<!-- footer영역 -->
+		</footer>
+
+	</div>
+</body>
+</html>

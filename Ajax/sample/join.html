@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>NextIT</title>
+<link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/join.css">
+<script>
+	$(function() {
+		$("#mem_id").click(function() {
+			$(this).next().removeClass("warning");
+		});
+		$("#mem_name").click(function() {
+			$(this).next().removeClass("warning");
+		});
+		$("#mem_pw").click(function() {
+			$(this).next().removeClass("warning");
+		});
+		$("#mem_pw_check").click(function() {
+			$(this).next().removeClass("warning");
+		});
+		$("#mem_like_num").click(function() {
+			$(this).next().removeClass("warning");
+		});
+	});
+	function join() {
+		//alert("join");
+
+		//검증
+		if ($("#mem_id").val() == "") {
+			$("#mem_id").next().addClass("warning");
+			return;
+		} else if ($("#mem_name").val() == "") {
+			$("#mem_name").next().addClass("warning");
+			return;
+		} else if ($("#mem_pw").val() == "") {
+			$("#mem_pw").next().addClass("warning");
+			return;
+		} else if ($("#mem_pw_check").val() == "") {
+			$("#mem_pw_check").next().addClass("warning");
+			return;
+		} else if ($("#mem_like_num").val() == "") {
+			$("#mem_like_num").next().addClass("warning");
+			return;
+		}
+
+		let mem_id = $("#mem_id").val().trim();
+		console.log(mem_id + "입니다.");
+		let pattern = /\s/g;
+		if (mem_id.match(pattern)) {
+			alert("아이디에 공백이 존재합니다. 다시입력해주세요");
+			$("#mem_id").val("");
+			$("#mem_id").next().addClass("warning");
+			return;
+		} else if (mem_id.length < 4) {
+			alert("아이디를 4글자 이상 입력해주세요.");
+			$("#mem_id").val("");
+			$("#mem_id").next().addClass("warning");
+			return;
+		}
+		let mem_name = $("#mem_name").val().trim();
+		console.log("mem_name: " + mem_name);
+
+		let mem_pw = $("#mem_pw").val().trim();
+		console.log("mem_pw: " + mem_pw);
+		if (mem_pw.match(pattern)) {
+			alert("패스워드에 공백이 존재합니다. 다시 입력해주세요.");
+			$("#mem_pw").val("");
+			$("#mem_pw").next().addClass("warning");
+			return;
+		} else if (mem_pw.length < 4) {
+			alert("패스워드 4글자 이상 입력해주세요");
+			$("#mem_pw").val("");
+			$("#mem_pw").next().addClass("warning");
+			return;
+		}
+
+		let mem_pw_check = $("#mem_pw_check").val();
+		if (mem_pw != mem_pw_check) {
+			alert("입력하신 비밀번호와 다릅니다. 다시 입력해주세요.");
+			$("#mem_pw_check").val("");
+			return;
+		}
+
+		let mem_like_num = $("#mem_like_num").val();
+		if (isNaN(mem_like_num)) {
+			alert("1~9 안의 숫자를 입력해주세요.");
+			$("#mem_like_num").val("");
+			return;
+		} else if (mem_like_num > 9 || mem_like_num < 1) {
+			alert("1~9 안의 숫자를 입력해주세요.");
+			$("#mem_like_num").val("");
+			return;
+		}
+
+		console.log("id: ", mem_id);
+		console.log("name: ", mem_name);
+		console.log("pw: ", mem_pw);
+		console.log("like_num: ", mem_like_num);
+
+		let member_info = {};
+		member_info.mem_id = mem_id;
+		member_info.mem_name = mem_name;
+		member_info.mem_pw = mem_pw;
+		member_info.mem_like_num = mem_like_num;
+		console.log("member_info: ", member_info);
+
+		//     // 1명 회원가입
+		//     let member_arr = [];
+		//     member_arr.push(member_info);
+		//     console.log("member_arr: ", member_arr);
+
+		//     let memberList = JSON.stringify(member_arr);
+		//     console.log("json_member_arr: ", memberList);
+
+		//     let localStorage = window.localStorage;
+		//     if(!localStorage){
+		//      alert("해당 브라우저가 로컬스토리지를 지원하지 않습니다.");
+		//      return;
+		//     }else{
+		//      localStorage.setItem("memberList", memberList);
+		//      alert("회원가입이 완료되었습니다. 확인 누르시면 로그인화면으로 이동합니다.");
+		//      location.href = "./login.do";
+		//     }
+
+		// 다수 회원 저장
+		let localStorage = window.localStorage;
+		if (!localStorage) {
+			alert("해당 브라우저가 로컬스토리지를 지원하지 않습니다.");
+			return;
+		}
+		let member_arr = localStorage.getItem("memberList");
+		// console.log("member_arr: ", member_arr);
+
+		// 만약 회원이 1도 없다면
+		if (member_arr == null || member_arr == undefined || member_arr == "") {
+			member_arr = [];
+		} else {
+			member_arr = JSON.parse(member_arr);
+			console.log("member_arr.length: ", member_arr.length);
+		}
+
+		for (let i = 0; i < member_arr.length; i++) {
+			if (member_arr[i].mem_id == member_info.mem_id) {
+				alert("해당 아이디가 존재 합니다. 다른 아이디를 입력해주세요.")
+				$("#mem_id").val("");
+				return;
+			}
+
+		}
+
+		member_arr.push(member_info);
+
+		let memberList = JSON.stringify(member_arr);
+		console.log("memberList: ", memberList);
+
+		localStorage.setItem("memberList", memberList);
+		alert("회원가입이 완료되었습니다. 확인을 누르시면 로그인창으로 이동합니다.")
+		location.href = "/sample01_ajax/login.do";
+
+	};
+</script>
+</head>
+<body>
+	<section class="login_form">
+		<h1>NextIT</h1>
+		<form name="loginFrom" method="post">
+			<div class="int-area">
+				<input type="text" id="mem_id" name="mem_id" value=""
+					autocomplete="off" required> <label for=mem_id>USER
+					ID</label>
+			</div>
+			<div class="int-area">
+				<input type="text" id="mem_name" name="mem_name" value=""
+					autocomplete="off" required> <label for=mem_name>USER
+					NAME</label>
+			</div>
+			<div class="int-area">
+				<input type="password" id="mem_pw" name="mem_pw" value=""
+					autocomplete="off" required> <label for=mem_pw>PASSWORD</label>
+			</div>
+			<div class="int-area">
+				<input type="password" id="mem_pw_check" name="mem_pw_check"
+					value="" autocomplete="off" required> <label
+					for=mem_pw_check>RECONFIRM PASSWORD</label>
+			</div>
+			<div class="int-area">
+				<input type="text" id="mem_like_num" name="mem_like_num" value=""
+					autocomplete="off" required> <label for=mem_like_num>Like
+					Number 1~9 (To Find ID, PASSWORD)</label>
+			</div>
+			<div class="btn-area">
+				<button type="button" id="btn_join" name="btn_join" onclick="join()">JOIN</button>
+			</div>
+		</form>
+	</section>
+
+</body>
+</html>

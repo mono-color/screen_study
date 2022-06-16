@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>NextIT</title>
+    <link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg"/>
+    <link rel="stylesheet" type="text/css" href="./css/style_main.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    /*
+    작업순서
+        intro_bg
+            html 구성하기, css 입히기
+        sub_title_div
+            html 구성하기, css 입히기
+        main_text0
+            html 구성하기, css 입히기
+        main_text1
+            html 구성하기, css 입히기
+        main_text2
+            html 구성하기, css 입히기
+        footer
+            html 구성하기, css 입히기, 분리하기
+        intro_bg 
+            이미지 변경작업하기
+        반응형        
+    */
+        window.onload= function(){
+            // footer불러오기
+            // $("#page_footer").load("./footer.html");
+			 	$("#page_footer").load("/sample01_ajax/footer.do");
+			 	
+            
+            //alert("123");
+            let img_files=[
+                "./images/img1.jpg",
+                "./images/img2.jpg",
+                "./images/img102.jpg",
+            ];
+            let div_img = document.getElementById("img_div");
+            let i =0;
+            function fn_change_img(){
+                //alert("123123123");
+                //console.log("i::::"+i);
+                div_img.style.backgroundImage="url("+img_files[i]+")";
+                if(i==2){
+                    i=0;
+                }else{
+                    i++
+                }
+                div_img.style.transitionDuration="2s";
+                
+            }
+
+            setInterval(function(){
+              fn_change_img();
+
+            },4000);
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <div id="img_div" class="intro_bg">
+        <div class="header">
+            <!-- hearder s-->
+            <div class="searchArea">
+                <form action="">
+                    <input type="text" id="input_search" name="input_search"
+                        value="" placeholder="Search">
+                    <span>검색</span>
+                </form>
+            </div>
+            <ul class="nav">
+                <li><a href="">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#service">SERVICE</a>
+                    <ul>
+                        <li><a href="#">menu1</a></li>
+                        <li><a href="#">menu2</a></li>
+                        <li><a href="#">menu3</a></li>
+                    </ul>
+                </li>
+                <li><a href="#content">CONTENT</a></li>
+                <!-- 리스트 만들면 연결 -->
+                <li><a href="/sample01_ajax/board_list.do">NOTICE</a></li>
+            </ul>
+            <!-- header e -->
+
+
+            <!-- 반응형 추가 s -->
+            <!-- 3줄 선 그리기  -->
+            <input type="checkbox" id="menuicon" />
+            <label for="menuicon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <div class="header_icon">
+                <ul class="menu">
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#service">SERVICE</a></li>
+                    <li><a href="#content">CONTENT</a></li>
+                    <li><a href="http://127.0.0.1:5500/html_homepage_01_lecture/board_list.html">NOTICE</a></li>
+                </ul>
+            </div>
+            <!-- 반응형 추가 e -->
+
+        </div>
+        <div class="intro_text">
+            <h1>NextIT</h1>
+            <H4>넥스트아이티</H4>
+        </div>
+        
+    </div>
+    <!--1차 작업 intro_bg e -->
+
+
+    <!--2차 작업 sub_title_div s -->
+    <div class="sub_title_div">
+        <ul class="sub_title">
+            <li>
+                <div>
+                    <h2>AA</h2>
+                    <p>11</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h2>BB</h2>
+                    <p>22</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h2>CC</h2>
+                    <p>33</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h2>DD</h2>
+                    <p>44</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--2차 작업 sub_title_div e -->
+    
+    <!--3차 작업 main_text0 s -->
+    <div class="main_text0">
+        <h1 id="about">ABOUT</h1>
+        <p>4차 산업혁명 신기술 교육을 선도하는...</p>
+        <ul class="icons">
+            <li>
+                <div class="icon_img">
+                    <img src="./images/icon0.svg" alt="이미지가 없습니다.">
+                </div>
+                <div class="contents1_bold">
+                    <p>ABC</p>
+                </div>
+                <div class="contents2">
+                    <p>2323232323232</p>
+                </div>
+                <div class="more">
+                    MORE
+                </div>
+            </li>
+            <li>
+                <div class="icon_img">
+                    <img src="./images/icon1.svg" alt="이미지가 없습니다.">
+                </div>
+                <div class="contents1_bold">
+                    <p>ABC</p>
+                </div>
+                <div class="contents2">
+                    <p>2323232323232</p>
+                </div>
+                <div class="more">
+                    MORE
+                </div>
+            </li>
+            <li>
+                <div class="icon_img">
+                    <img src="./images/icon2.svg" alt="이미지가 없습니다.">
+                </div>
+                <div class="contents1_bold">
+                    <p>ABC</p>
+                </div>
+                <div class="contents2">
+                    <p>2323232323232</p>
+                </div>
+                <div class="more">
+                    MORE
+                </div>
+            </li>
+                
+        </ul>
+    </div>
+    <!--3차 작업 main_text0 e -->
+
+
+    <!--4차 작업 main_text1 s -->
+    <div class="main_text1">
+        <h1 id="service">SERVICE</h1>
+        <div class="contents2">
+            <p>5454545454545454545454</p>
+        </div>
+        <div class="service">
+            <div>
+                <img src="./images/img101.png" alt="이지미가 존재하지 않습니다.">
+            </div>
+            <div class="contents3">
+                <h2>service content2</h2>
+                <p>안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                    안녕하세요 NextIT 입니다. 만나서 반갑습니다.
+                </p>
+            </div>
+        </div>
+    </div>  
+    <!--4차 작업 main_text1 e -->
+
+
+    <!--5차 작업 main_text2 s -->
+    <div class="main_text2">
+        <ul>
+            <li>
+                <div class="last_bg1">
+                    <h1 id="content">CONTENT</h1>
+                    <div>
+                        <p>NextIT 교육센터입니다.</p>
+                    </div>
+                    <div class="more2">
+                        <p>더 알아보기</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="last_bg2">
+                    <h1>CUSTOMER</h1>
+                    <div>
+                        <p>NextIT 교육센터입니다.</p>
+                    </div>
+                    <div class="more2">
+                        <p>더 알아보기</p>
+                    </div>
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+    <!--5차 작업 main_text2 e -->
+
+    
+    <!--6차 작업 footer -->
+    <footer id="page_footer">
+    <!-- 
+        <div class="div_footer">
+            <div class="div_footer_log">
+                NextIT
+            </div>
+            <div class="div_footer_addr">
+                Copyright © Next IT Edu-Center 2016
+                <br>Tel : 042-719-8850 Fax : 042-719-8851 e-Mail : nextitcenter@gmail.com
+                <br>(34856) 넥스트 IT 교육센터
+                <br>대전광역시 중구 계룡로 825 (용두동, 희영빌딩 2층)
+            </div>
+        </div>
+    -->
+    </footer>
+
+</div><!-- wrap e -->
+</body>
+</html>

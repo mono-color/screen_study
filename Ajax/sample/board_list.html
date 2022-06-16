@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>NextIT</title>
+<link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg" />
+<link rel="stylesheet" type="text/css" href="./css/style_boardList.css">
+<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/footer.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(function() {
+		// jQuery 확인
+		// alert("345345");
+		//$(".top_nav").load("./header.html");
+		//$("#page_footer").load("./footer.html");
+		$(".top_nav").load("/sample01_ajax/header.do");
+		$("#page_footer").load("/sample01_ajax/footer.do");
+		boardList();
+	});
+	
+	function boardList() {
+		let boardList = localStorage.getItem("boardList");
+		console.log("boardList: ", boardList);
+		
+		if(boardList !== null && boardList !== undefined && boardList !==""){
+			let boardParse = JSON.parse(boardList);
+			console.log("boardParse: ", boardParse);
+		
+			let output ="";
+			output += "<tr>";
+			output += "<td>" + boardParse.write_num + "</td>";
+			output += "<td>" + boardParse.notice_title + "</td>";
+			output += "<td>" + boardParse.mem_id + "</td>";
+			output += "<td>" + boardParse.write_date + "</td>";
+			output += "</td>";
+			
+			$("#div_table > table > tbody").append(output);
+			
+		}
+	}
+	
+	function board_write(){
+		//alert("board_write");
+		location.href="/sample01_ajax/board_write.do"
+	}
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<div class="header">
+			<div class="top_nav">
+				<!-- header 영역 -->
+			</div>
+		</div>
+		<!-- header e -->
+
+		<div class="intro_bg">
+			<div class="intro_text">
+				<h1>NextIT</h1>
+				<h4>넥스트아이티</h4>
+			</div>
+		</div>
+		<!-- intro_bg e -->
+
+		<!-- 전체 영역잡기 -->
+		<div class="contents">
+			<!-- 사용할 영역잡기 -->
+			<div class="content01">
+				<div class="content01_h1">
+					<h1>공지사항</h1>
+				</div>
+				<!-- 리스트 -->
+				<div id="div_table">
+					<table>
+						<colgroup>
+							<col width="40">
+							<col>
+							<col width="180">
+							<col width="300">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>시간</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+
+				<!-- paging -->
+				<div class="div_paging">
+					<div class="div_paging_a">
+						<a href="">&lt;&lt;</a> <a href="">1</a> <a href="">2</a> <a
+							href="">3</a> <a href="">&gt;&gt;</a>
+					</div>
+					<div class="div_board_write">
+						<input type="button" onclick="board_write()" value="글쓰기">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- footer -->
+		<footer id="page_footer">
+			<!-- footer영역 -->
+		</footer>
+
+	</div>
+</body>
+</html>
