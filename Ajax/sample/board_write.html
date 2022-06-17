@@ -146,7 +146,7 @@
 			write_num = parseInt(write_num) + 1;
 		}
 		console.log("write_num : ", write_num);
-
+		
 		let notice_title = $("#notice_title").val();
 		let notice_content = $("#notice_content").val();
 		let notice_gender = $("#gender").val();
@@ -245,8 +245,40 @@
 		} else {
 			alert("취소하셨습니다.");
 		}
-
 	}
+	
+	function fn_write_delete() {
+		console.log("fn_write_delete");
+		let ret = confirm("삭제하시겠습니까?");
+		if(ret == true){
+			console.log("temp_write_num : ", temp_write_num);
+			console.log("boardList_json : ", boardList_json);
+			
+			for(let i in boardList_json){
+				if(temp_write_num == boardList_json[i].write_num){
+					console.log("temp_write_num 와 write_num이 동일합니다.");
+					let mem_id = sessionStorage.getItem("mem_id");
+					if(mem_id == boardList_json[i].mem_id){
+						boardList_json.splice(i,1);
+					}else{
+						
+					}
+				}
+			}
+			let boardList = JSON.stringify(boardList_json);
+			localStorage.setItem("boardList", boardList);
+			sessionStorage.removeItem("temp_write_num");
+			alert("삭제하셨습니다");
+			location.href = "/sample01_ajax/board_list.do";
+			
+			
+		}else{
+			alert("취소하셨습니다.");
+		}
+		
+	}
+	
+	
 </script>
 </head>
 <body>
