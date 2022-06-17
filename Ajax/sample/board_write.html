@@ -9,61 +9,113 @@
 <link rel="stylesheet" type="text/css" href="./css/style_boardWrite.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+	let boardList_json;
+	let temp_write_num;
+
 	$(function() {
-		/* $(".top_nav").load("./header.html");
-		$("#page_footer").load("./footer.html"); */
+		//$(".top_nav").load("./header.html");
+		//$("#page_footer").load("./footer.html");
 		$(".top_nav").load("/sample01_ajax/header.do");
 		$("#page_footer").load("/sample01_ajax/footer.do");
+
+		temp_write_num = sessionStorage.getItem("temp_write_num");
+		console.log(temp_write_num);
+
+		if (temp_write_num !== null && temp_write_num !== undefined
+				&& temp_write_num !== "") {
+			boardList = localStorage.getItem("boardList");
+
+			boardList_json = JSON.parse(boardList);
+			console.log(boardList_json);
+
+			for ( let i in boardList_json) {
+				if (temp_write_num == boardList_json[i].write_num) {
+					console.log("temp_write_num 와 write_num이 동일합니다.");
+
+					$("#notice_title").val(boardList_json[i].notice_title);
+					$("#notice_content").val(boardList_json[i].notice_content);
+					$("select[name='gender']").val(
+							boardList_json[i].notice_gender).prop("checked",
+							true);
+					$("input:radio[id='" + boardList_json[i].notice_job + "']")
+							.prop("checked", true);
+					$("input:checkbox").prop("checked", false);
+
+					let arr_region = boardList_json[i].notice_region;
+					for ( let i in arr_region) {
+						$("input:checkbox[id='" + arr_region[i] + "']").prop(
+								"checked", true);
+					}
+					//본인 글이 아닌경우 수정, 삭제 버튼 숨기기
+					let mem_id = sessionStorage.getItem("mem_id");
+					if (mem_id != boardList_json[i].mem_id) {
+						$("#write_update").hide();
+						$("#write_delete").hide();
+					}
+				}
+			}
+			// 현재 수정인 경우 이므로 등록버튼은 숨기기
+			$("#write_insert").hide();
+		} else {
+			// 등록인 경우 수정버튼 숨기기
+			$("#write_update").hide();
+		}
+
 	});
 	function fn_submit() {
-
-		/* let notice_title = document.getElementById('notice_title').value;
-		let notice_content = document.getElementById('notice_content').value;
-		let notice_gender = document.getElementById('gender').value;
-		let notice_job = document.querySelector("input[name='job']:checked").value;
+		/*
+		let notice_title = document.getElementById('notice_title').value;
+		let notice_content = document.getElementById('notice_content').value; 
+		let notice_gender = document.getElementById('gender').value;  
+		let notice_job = document.querySelector("input[name='job']:checked").value; 
 		let region = document.querySelectorAll("input[name='region']:checked");
-		let notice_region = [];
+		let notice_region=[];
 		console.log(region.length);
-		for (let i = 0; i < region.length; i++) {
-			// console.log(region[i].value);
-			notice_region.push(region[i].value);
+		for(let i=0; i< region.length; i++){
+		    // console.log(region[i].value);
+		    notice_region.push(region[i].value);
 		}
 
-		let output01 = '';
+		let output01 ='';
 
-		output01 += "제목:::::" + notice_title + "\n";
-		output01 += "내용:::::" + notice_content + "\n";
-		output01 += "성별:::::" + notice_gender + "\n";
-		output01 += "직업:::::" + notice_job + "\n";
-		output01 += "지역:::::" + notice_region + "\n";
-		console.log(output01); 
-		
-		// 필요조건 : 제목, 내용, 성별, 내용, 성별, 직업, 지역, 작성자, 작성시간
-		 let write_num = 1;
+		output01 += "제목:::::"+notice_title+"\n";
+		output01 += "내용:::::"+notice_content+"\n";
+		output01 += "성별:::::"+notice_gender+"\n";
+		output01 += "직업:::::"+notice_job+"\n";
+		output01 += "지역:::::"+notice_region+"\n";
+		console.log(output01);
+		 */
+
+		//console.log("fn_submit");
+
+		//우선 1개의 글입력만 처리
+		//필요조건 : 글 키값, 제목, 내용, 성별, 직업, 지역, 작성자, 작성시간
+		/*let write_num = 1;
 		let notice_title = $("#notice_title").val();
 		let notice_content = $("#notice_content").val();
 		let notice_gender = $("#gender").val();
 		let notice_job = $("input[name='job']:checked").val();
 		
-		let notice_region = [];
+		let notice_region =[];
 		let region = $("input[name='region']:checked");
 		region.each(function(){
 			notice_region.push($(this).val());
-		})
-		console.log("notice_title" , notice_title);
-		console.log("notice_content" , notice_content);
-		console.log("notice_gender" , notice_gender);
-		console.log("notice_job" ,notice_job );
-		console.log("notice_region" ,notice_region );
+		});
+		
+		console.log("notice_title", notice_title);
+		console.log("notice_content", notice_content);
+		console.log("notice_gender", notice_gender);
+		console.log("notice_job", notice_job);
+		console.log("notice_region", notice_region);
 		
 		//작성자
 		let mem_id = sessionStorage.getItem("mem_id");
-		console.log("mem_id: ", mem_id);
+		console.log("mem_id : ", mem_id);
 		
 		//작성시간
 		let current_date = new Date();
-		current_date = current_date.toLocaleStorage();
-		console.log("current_date: ", current_date);
+		current_date = current_date.toLocaleString(); 
+		console.log("current_date :" , current_date);
 		
 		let boardWrite ={};
 		boardWrite.write_num = write_num;
@@ -75,86 +127,125 @@
 		boardWrite.mem_id = mem_id;
 		boardWrite.write_date = current_date;
 		
-		console.log("boardWrite",boardWrite);
+		console.log("boardWrite : ", boardWrite);
 		
 		let boardList = JSON.stringify(boardWrite);
-		console.log("boardList",boardList);
-		
-		localStorage.setItem("boardList", boardList);
-		
-		alert("등록이 완료되었습니다.");
-		location.href = "/sample01_ajax/board_list.do"; */ 
-		
-		// 여러개 글처리
-		//let write_num = 1;
-		let write_num = localStorage.getItem("write_num");
-		if(write_num === null || write_num === undefined || write_num === ""){
-			write_num = 1;
-		} else{
-			write_num = parseInt(write_num)+1;
-		}
-		console.log("write_num: ", write_num);
-		
-		let notice_title = $("#notice_title").val();
-		let notice_content = $("#notice_content").val();
-		let notice_gender = $("#gender").val();
-		let notice_job = $("input[name='job']:checked").val();
-		
-		let notice_region = [];
-		let region = $("input[name='region']:checked");
-		region.each(function(){
-			notice_region.push($(this).val());
-		})
-		console.log("notice_title" , notice_title);
-		console.log("notice_content" , notice_content);
-		console.log("notice_gender" , notice_gender);
-		console.log("notice_job" ,notice_job );
-		console.log("notice_region" ,notice_region );
-		
-		//작성자
-		let mem_id = sessionStorage.getItem("mem_id");
-		console.log("mem_id: ", mem_id);
-		
-		//작성시간
-		let current_date = new Date();
-		current_date = current_date.toLocaleDateString()
-		console.log("current_date: ", current_date);
-		
-		let boardWrite ={};
-		boardWrite.write_num = write_num;
-		boardWrite.notice_title = notice_title;
-		boardWrite.notice_content = notice_content;
-		boardWrite.notice_gender = notice_gender;
-		boardWrite.notice_job = notice_job;
-		boardWrite.notice_region = notice_region;
-		boardWrite.mem_id = mem_id;
-		boardWrite.write_date = current_date;
-		
-		console.log("boardWrite",boardWrite);
-		
-		let boardArray = localStorage.getItem("boardList");
-		if(boardArray === null|| boardArray === undefined || boardArray ===""){
-			boardArray = [];
-		}else{
-			boardArray = JSON.parse(boardArray);
-		}
-		console.log(boardArray);
-		boardArray.push(boardWrite);
-		console.log("boardArray : ", boardArray);
-		
-		let boardList = JSON.stringify(boardArray);
 		console.log("boardList : ", boardList);
 		
 		localStorage.setItem("boardList", boardList);
 		
-		/* boardList = JSON.stringify(boardList);
-		console.log("boardList",boardList);
-		
-		localStorage.setItem("boardList", boardList); */
-		
 		alert("등록이 완료되었습니다.");
-		location.href = "/sample01_ajax/board_list.do";
-		
+		location.href="/sample01_ajax/board_list.do" */
+
+		//여러개 글처리
+		//let write_num = 1;
+		let write_num = localStorage.getItem("write_num");
+		if (write_num === null || write_num === undefined || write_num === "") {
+			write_num = 1;
+		} else {
+			write_num = parseInt(write_num) + 1;
+		}
+		console.log("write_num : ", write_num);
+
+		let notice_title = $("#notice_title").val();
+		let notice_content = $("#notice_content").val();
+		let notice_gender = $("#gender").val();
+		let notice_job = $("input[name='job']:checked").val();
+
+		let notice_region = [];
+		let region = $("input[name='region']:checked");
+		region.each(function() {
+			notice_region.push($(this).val());
+		});
+
+		console.log("notice_title", notice_title);
+		console.log("notice_content", notice_content);
+		console.log("notice_gender", notice_gender);
+		console.log("notice_job", notice_job);
+		console.log("notice_region", notice_region);
+
+		//작성자
+		let mem_id = sessionStorage.getItem("mem_id");
+		console.log("mem_id : ", mem_id);
+
+		//작성시간
+		let current_date = new Date();
+		current_date = current_date.toLocaleString();
+		console.log("current_date :", current_date);
+
+		let boardWrite = {};
+		boardWrite.write_num = write_num;
+		boardWrite.notice_title = notice_title;
+		boardWrite.notice_content = notice_content;
+		boardWrite.notice_gender = notice_gender;
+		boardWrite.notice_job = notice_job;
+		boardWrite.notice_region = notice_region;
+		boardWrite.mem_id = mem_id;
+		boardWrite.write_date = current_date;
+
+		console.log("boardWrite : ", boardWrite);
+
+		let boardArray = localStorage.getItem("boardList");
+		if (boardArray === null || boardArray === undefined
+				|| boardArray === "") {
+			boardArray = [];
+		} else {
+			boardArray = JSON.parse(boardArray);
+		}
+
+		boardArray.push(boardWrite);
+		console.log("boardArray : ", boardArray);
+
+		let boardList = JSON.stringify(boardArray);
+		console.log("boardList : ", boardList);
+
+		localStorage.setItem("boardList", boardList);
+		localStorage.setItem("write_num", write_num);
+
+		//let boardList = JSON.stringify(boardWrite);
+		//console.log("boardList : ", boardList);
+
+		//localStorage.setItem("boardList", boardList);
+
+		alert("등록이 완료되었습니다.");
+		location.href = "/sample01_ajax/board_list.do"
+	}
+
+	function fn_write_update() {
+		console.log("fn_write_update");
+		let ret = confirm("수정하시겠습니까?");
+		if (ret == true) {
+			console.log("수정진행");
+			console.log("boardList_json : ", boardList_json);
+			console.log("temp_write_num : ", temp_write_num);
+
+			for ( let i in boardList_json) {
+				if (temp_write_num == boardList_json[i].write_num) {
+					console.log("temp_write_num 와 write_num이 동일합니다.")
+					boardList_json[i].notice_title = $("#notice_title").val();
+					boardList_json[i].notice_content = $("#notice_content")
+							.val();
+					boardList_json[i].notice_gender = $("#gender").val();
+					boardList_json[i].notice_job = $(
+							"input:radio[name='job']:checked").val();
+
+					let arr_region = [];
+					let update_region = $("input:checkbox[name='region']:checked");
+					update_region.each(function() {
+						arr_region.push($(this).val());
+					});
+					boardList_json[i].notice_region = arr_region;
+				}
+			}
+			let boardList = JSON.stringify(boardList_json);
+			localStorage.setItem("boardList", boardList);
+			sessionStorage.removeItem("temp_write_num");
+			alert("수정이 완료되었습니다.");
+			location.href = "/sample01_ajax/board_list.do";
+		} else {
+			alert("취소하셨습니다.");
+		}
+
 	}
 </script>
 </head>
@@ -233,8 +324,10 @@
 					<!-- 버튼 -->
 					<div id="div_button">
 						<input type="button" value="목록"> <input type="button"
-							onclick="javascript:fn_submit()" value="등록"> <input
-							type="button" value="수정"> <input type="button" value="삭제">
+							id="write_insert" onclick="javascript:fn_submit()" value="등록">
+						<input type="button" id="write_update" onclick="fn_write_update()"
+							value="수정"> <input type="button" id="write_delet"
+							onclick="fn_write_delete()" value="삭제">
 					</div>
 				</form>
 			</div>
