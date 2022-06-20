@@ -19,61 +19,77 @@
 		boardList();
 	});
 
-	//페이징 처리 1차 
-	function boardList() {
+	//페이징 처리 02(하단에 페이징번호를 클릭하면 해당 페이지가 보이게 처리)
+	//function boardList(){
+	function boardList(cur_num){
 		
+		console.log("boardList");
+		console.log("cur_num: "+ cur_num);
+		
+		$("#div_table > table > tbody > tr").remove();
+		$("#div_paging_a").children().remove();
+		$(".div_paging_a").text("");
+		
+		// 여러개 글 처리
 		let boardList = localStorage.getItem("boardList");
 		console.log("boardList: ", boardList);
-
-		if (boardList !== null && boardList !== undefined && boardList !== "") {
+		
+		if(boardList !== null && boardList !==undefined && boardList !== ""){
 			let boardParse = JSON.parse(boardList);
 			console.log("boardParse: ", boardParse);
-
+			
 			let total_cnt = boardParse.length;
-			console.log("total_cnt: ", total_cnt);
+			console.log("total_cnt", total_cnt);
 			
 			//하단에 추가할 페이징 개수 세팅
 			//하단에 표시할 페이지 개수
 			let basic_paging_cnt = 3;
-			//총 페이지 구하기(한 페이지 10개씩 임)
+			// 총 페이지 구하기 (한 페이지에 10개씩이므로 총 글 개수에서 10으로 나누기 )
 			let paging_cnt = total_cnt/10;
-			console.log("paging_cnt : ", paging_cnt);
+			console.log("paging_cnt: ", paging_cnt);
 			
-			//2번페이지로 설정에서 페이지 리스트 생성
-			let paging_num = 2;
+			// let paging_num = 2;
+			let paging_num;
+			if(cur_num !== null && cur_num !== undefined && cur_num != 0){
+				paging_num = cur_num;			
+			}else{
+				paging_num =1;
+			}
 			
-			//해당 페이지에 낮은 게시글 순번 구하기
-			let min_num = (paging_num * 10) -9;
+			let min_num = (paging_num * 10) - 9;
 			
-			//해당 페이지에 높은 게시글 순번 구하기
 			let max_num = (paging_num * 10);
 			
-			console.log("min_num : ", min_num);
-			console.log("max_num : ", max_num);
+			console.log("min_num", min_num);
+			console.log("max_num", max_num);
 			
-			let paging_output = "";
-			for(let i = 0; i< paging_cnt; i++){
+			let paging_output ="";
+			for(let i =0; i<paging_cnt; i++){
 				if(i==0){
 					paging_output += "&lt;&lt;";
 				}
-				//페이지 번호
-				paging_output += "<a>"+ (i+1) + "</a>";
-				if(i == parseInt(paging_cnt)){
-					paging_output += "&gt;&gt;";
+					//페이지 번호
+					//paging_output += "<a>"+(i+1)+"</a>";
+					paging_output += "<a href='#' onclick='boardList("+(i+1)+")'>"+(i+1)+"</a>";
+					
+					if(i == parseInt(paging_cnt)){
+						paging_output += "&gt;&gt;";
+					}
 				}
-			}
-			$(".div_paging_a").append(paging_output);
-
-			let output = "";
-			boardParse.reverse().forEach(function(element, index) {
-				output += "<tr>";
-				output += "<td>" + (total_cnt - index) + "</td>";
-				output += "<td><a href='#' onclick=fn_title("
-						+ element.write_num + ")>"
-						+ element.notice_title + "</a></td>";
-				output += "<td>" + element.mem_id + "</td>";
-				output += "<td>" + element.write_date + "</td>";
-				output += "</td>";
+				$(".div_paging_a").append(paging_output);
+			
+			
+			let output ="";
+			boardParse.reverse().forEach(function (element, index) {
+				
+				if(min_num <= index +1 && index+1 <=max_num){
+					output += "<tr>";
+					output += "<td>" + (total_cnt - index) + "</td>";
+					output += "<td><a href='#' onclick=fn_title("+ element.write_num +")>" + element.notice_title + "</a></td>";
+					output += "<td>" + element.mem_id + "</td>";
+					output += "<td>" + element.current_date + "</td>";
+					output += "</tr>";
+				}
 			});
 			$("#div_table > table > tbody").append(output);
 		}
