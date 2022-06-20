@@ -16,96 +16,102 @@
 		//$("#page_footer").load("./footer.html");
 		$(".top_nav").load("/sample01_ajax/header.do");
 		$("#page_footer").load("/sample01_ajax/footer.do");
+
 		boardList();
 	});
 
-	//페이징 처리 02(하단에 페이징번호를 클릭하면 해당 페이지가 보이게 처리)
-	//function boardList(){
-	function boardList(cur_num){
-		
+	//페이징처리 03 (좌우 화살표 및 페이징 개수 처리)
+	function boardList(cur_num) {
+
 		console.log("boardList");
-		console.log("cur_num: "+ cur_num);
-		
+		console.log("cur_num: " + cur_num);
+
 		$("#div_table > table > tbody > tr").remove();
 		$("#div_paging_a").children().remove();
 		$(".div_paging_a").text("");
-		
-		// 여러개 글 처리
+
 		let boardList = localStorage.getItem("boardList");
 		console.log("boardList: ", boardList);
-		
-		if(boardList !== null && boardList !==undefined && boardList !== ""){
+
+		if (boardList !== null && boardList !== undefined && boardList !== "") {
 			let boardParse = JSON.parse(boardList);
 			console.log("boardParse: ", boardParse);
-			
+
 			let total_cnt = boardParse.length;
 			console.log("total_cnt", total_cnt);
-			
-			//하단에 추가할 페이징 개수 세팅
-			//하단에 표시할 페이지 개수
+
 			let basic_paging_cnt = 3;
-			// 총 페이지 구하기 (한 페이지에 10개씩이므로 총 글 개수에서 10으로 나누기 )
-			let paging_cnt = total_cnt/10;
+			let paging_cnt = total_cnt / 10;
 			console.log("paging_cnt: ", paging_cnt);
-			
-			// let paging_num = 2;
+
 			let paging_num;
-			if(cur_num !== null && cur_num !== undefined && cur_num != 0){
-				paging_num = cur_num;			
-			}else{
-				paging_num =1;
+			if (cur_num !== null && cur_num !== undefined && cur_num != 0) {
+				paging_num = cur_num;
+			} else {
+				paging_num = 1;
 			}
-			
+
 			let min_num = (paging_num * 10) - 9;
-			
+
 			let max_num = (paging_num * 10);
-			
+
 			console.log("min_num", min_num);
 			console.log("max_num", max_num);
-			
-			let paging_output ="";
-			for(let i =0; i<paging_cnt; i++){
-				if(i==0){
-					paging_output += "&lt;&lt;";
+
+			let paging_output = "";
+			for (let i = 0; i < paging_cnt; i++) {
+				if (i == 0) {
+					//paging_output += "&lt;&lt;";
+					paging_output += "<a href='#' class='button_side' onclick='boardList("
+							+ (paging_num - 1) + ")'>&lt;&lt;</a>";
 				}
-					//페이지 번호
-					//paging_output += "<a>"+(i+1)+"</a>";
-					paging_output += "<a href='#' onclick='boardList("+(i+1)+")'>"+(i+1)+"</a>";
-					
-					if(i == parseInt(paging_cnt)){
-						paging_output += "&gt;&gt;";
-					}
+				//paging_output += "<a href='#' onclick='boardList("+(i+1)+")'>"+(i+1)+"</a>";
+
+				//클릭한 숫자가 1이거나 목록 버튼을 클릭해서 리스트 페이지로 온 경우
+				if (paging_num == 1) {
+					paging_output += "<a href='#' onclick='boardList("
+							+ (i + 1) + ")'>" + (i + 1) + "</a>";
 				}
-				$(".div_paging_a").append(paging_output);
-			
-			
-			let output ="";
-			boardParse.reverse().forEach(function (element, index) {
-				
-				if(min_num <= index +1 && index+1 <=max_num){
-					output += "<tr>";
-					output += "<td>" + (total_cnt - index) + "</td>";
-					output += "<td><a href='#' onclick=fn_title("+ element.write_num +")>" + element.notice_title + "</a></td>";
-					output += "<td>" + element.mem_id + "</td>";
-					output += "<td>" + element.current_date + "</td>";
-					output += "</tr>";
+				//클릭한 숫자가 1보다 크고 마지막 페이지 숫자보다 작은 경우
+
+				//클릭한 숫자가 마지막 페이지 숫자인 경우
+
+				if (i == parseInt(paging_cnt)) {
+					paging_output += "&gt;&gt;";
 				}
-			});
+			}
+			$(".div_paging_a").append(paging_output);
+
+			let output = "";
+			boardParse.reverse().forEach(
+					function(element, index) {
+
+						if (min_num <= index + 1 && index + 1 <= max_num) {
+							output += "<tr>";
+							output += "<td>" + (total_cnt - index) + "</td>";
+							output += "<td><a href='#' onclick=fn_title("
+									+ element.write_num + ")>"
+									+ element.notice_title + "</a></td>";
+							output += "<td>" + element.mem_id + "</td>";
+							output += "<td>" + element.current_date + "</td>";
+							output += "</tr>";
+						}
+
+					});
+
 			$("#div_table > table > tbody").append(output);
+
 		}
 	}
-
-	
 	function fn_title(temp_write_num) {
-		console.log("temp_write_num" + temp_write_num);
+		console.log("temp_write_num: " + temp_write_num);
 		sessionStorage.setItem("temp_write_num", temp_write_num);
-		location.href="/sample01_ajax/board_write.do";
-	}
-
-	function board_write() {
-		//alert("board_write");
-		sessionStorage.removeItem("temp_write_num");
 		location.href = "/sample01_ajax/board_write.do";
+	}
+	function board_write() {
+		console.log("board_write");
+		sessionStorage.removeItem("temp_write_num");
+		location.href = "/sample01_ajax/board_write.do"
 	}
 </script>
 </head>
@@ -117,7 +123,6 @@
 			</div>
 		</div>
 		<!-- header e -->
-
 		<div class="intro_bg">
 			<div class="intro_text">
 				<h1>NextIT</h1>
@@ -125,7 +130,6 @@
 			</div>
 		</div>
 		<!-- intro_bg e -->
-
 		<!-- 전체 영역잡기 -->
 		<div class="contents">
 			<!-- 사용할 영역잡기 -->
@@ -151,37 +155,29 @@
 							</tr>
 						</thead>
 						<tbody>
-
 						</tbody>
 					</table>
 				</div>
-
 				<!-- paging -->
 				<div class="div_paging">
 					<div class="div_paging_a">
-						
-						
-						<!-- <a href="">&lt;&lt;</a> 
-						<a href="">1</a>
-						 <a href="">2</a>
-						  <a href="">3</a> 
-						  <a href="">&gt;&gt;</a> -->
-						  
-						  
+						<!--     <a href="">&lt;&lt;</a>
+                        <a href="">1</a>
+                        <a href="">2</a>
+                        <a href="">3</a>
+                        <a href="">&gt;&gt;</a>  -->
 					</div>
 					<div class="div_board_write">
-						<input type="button" onclick="board_write()" value="글쓰기">
+						<!-- <input type="button" value="글쓰기" onclick="location.href='/sample01_ajax/board_write.do'"> -->
+						<input type="button" value="글쓰기" onclick="board_write()">
 					</div>
 				</div>
-
 			</div>
 		</div>
-
 		<!-- footer -->
 		<footer id="page_footer">
 			<!-- footer영역 -->
 		</footer>
-
 	</div>
 </body>
 </html>
