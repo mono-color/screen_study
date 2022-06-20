@@ -19,27 +19,9 @@
 		boardList();
 	});
 
+	//페이징 처리 1차 
 	function boardList() {
-		// 1개만 글처리
-		/* let boardList = localStorage.getItem("boardList");
-		console.log("boardList: ", boardList);
 		
-		if(boardList !== null && boardList !== undefined && boardList !==""){
-			let boardParse = JSON.parse(boardList);
-			console.log("boardParse: ", boardParse);
-		
-			let output ="";
-			output += "<tr>";
-			output += "<td>" + boardParse.write_num + "</td>";
-			output += "<td>" + boardParse.notice_title + "</td>";
-			output += "<td>" + boardParse.mem_id + "</td>";
-			output += "<td>" + boardParse.write_date + "</td>";
-			output += "</td>";
-			
-			$("#div_table > table > tbody").append(output);
-		} */
-
-		// 여러개 글처리
 		let boardList = localStorage.getItem("boardList");
 		console.log("boardList: ", boardList);
 
@@ -49,28 +31,59 @@
 
 			let total_cnt = boardParse.length;
 			console.log("total_cnt: ", total_cnt);
+			
+			//하단에 추가할 페이징 개수 세팅
+			//하단에 표시할 페이지 개수
+			let basic_paging_cnt = 3;
+			//총 페이지 구하기(한 페이지 10개씩 임)
+			let paging_cnt = total_cnt/10;
+			console.log("paging_cnt : ", paging_cnt);
+			
+			//2번페이지로 설정에서 페이지 리스트 생성
+			let paging_num = 2;
+			
+			//해당 페이지에 낮은 게시글 순번 구하기
+			let min_num = (paging_num * 10) -9;
+			
+			//해당 페이지에 높은 게시글 순번 구하기
+			let max_num = (paging_num * 10);
+			
+			console.log("min_num : ", min_num);
+			console.log("max_num : ", max_num);
+			
+			let paging_output = "";
+			for(let i = 0; i< paging_cnt; i++){
+				if(i==0){
+					paging_output += "&lt;&lt;";
+				}
+				//페이지 번호
+				paging_output += "<a>"+ (i+1) + "</a>";
+				if(i == parseInt(paging_cnt)){
+					paging_output += "&gt;&gt;";
+				}
+			}
+			$(".div_paging_a").append(paging_output);
 
 			let output = "";
-			boardParse.reverse().forEach(
-					function(element, index) {
-						output += "<tr>";
-						output += "<td>" + (total_cnt - index) + "</td>";
-						output += "<td><a href='#' onclick=fn_title("
-								+ element.write_num + ")>"
-								+ element.notice_title + "</a></td>";
-						output += "<td>" + element.mem_id + "</td>";
-						output += "<td>" + element.write_date + "</td>";
-						output += "</td>";
-					});
+			boardParse.reverse().forEach(function(element, index) {
+				output += "<tr>";
+				output += "<td>" + (total_cnt - index) + "</td>";
+				output += "<td><a href='#' onclick=fn_title("
+						+ element.write_num + ")>"
+						+ element.notice_title + "</a></td>";
+				output += "<td>" + element.mem_id + "</td>";
+				output += "<td>" + element.write_date + "</td>";
+				output += "</td>";
+			});
 			$("#div_table > table > tbody").append(output);
 		}
 	}
 
+	
 	function fn_title(temp_write_num) {
 		console.log("temp_write_num" + temp_write_num);
 		sessionStorage.setItem("temp_write_num", temp_write_num);
 		location.href="/sample01_ajax/board_write.do";
-		
 	}
 
 	function board_write() {
@@ -130,8 +143,15 @@
 				<!-- paging -->
 				<div class="div_paging">
 					<div class="div_paging_a">
-						<a href="">&lt;&lt;</a> <a href="">1</a> <a href="">2</a> <a
-							href="">3</a> <a href="">&gt;&gt;</a>
+						
+						
+						<!-- <a href="">&lt;&lt;</a> 
+						<a href="">1</a>
+						 <a href="">2</a>
+						  <a href="">3</a> 
+						  <a href="">&gt;&gt;</a> -->
+						  
+						  
 					</div>
 					<div class="div_board_write">
 						<input type="button" onclick="board_write()" value="글쓰기">
