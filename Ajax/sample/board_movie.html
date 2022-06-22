@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset='utf-8'>
+<title>NextIT</title>
+<link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg" />
+<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/footer.css">
+<link rel="stylesheet" type="text/css" href="./css/style_boardList.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(function() {
+		/* $(".top_nav").load("./header.html");
+		$("#page_footer").load("./footer.html"); */
+		$(".top_nav").load("/sample01_ajax/header.do");
+		$("#page_footer").load("/sample01_ajax/footer.do");
+		//02443575f839b22ef3f0887f45b629d2 : 키값
+		//http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101
+
+		let api_key = "02443575f839b22ef3f0887f45b629d2";
+		let api_url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json";
+		$.ajax({
+			type : "get",
+			url : api_url,
+			data : {
+				"key" : api_key,
+				"targetDt" : new Date(Date.now() - 86400000).toISOString().slice(0,10).replace(/-/g,"")
+			},
+			success : function(data) {
+				console.log(data);
+				let movie_list = data.boxOfficeResult;
+				console.log("movie_list: ", movie_list);
+				
+				let movie_array = movie_list.dailyBoxOfficeList;
+				console.log("movie_array: ", movie_array);
+				console.log("movie_array.length: ", movie_array.length);
+				
+				let index = 1;
+				let insertHtml="";
+				movie_array.forEach(element => {
+					insertHtml +="<tr>"
+					insertHtml +="<td>" + index + "</td>"
+					insertHtml +="<td>" + element.movieNm + "</td>"
+					insertHtml +="</tr>"
+					index++;
+				});
+				console.log("insertHtml", insertHtml);
+				$("#div_table tbody").html(insertHtml);
+				
+			},
+			error : function() {
+				console.log("error");
+			}
+		})
+
+	});
+</script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header">
+			<div class="top_nav">
+				<!-- header영역 -->
+			</div>
+		</div>
+		<!-- header e -->
+
+		<div class="intro_bg">
+			<div class="intro_text">
+				<h1>NextIT</h1>
+				<h4>넥스트아이티</h4>
+			</div>
+		</div>
+		<!-- intro_bg e -->
+
+		<!-- 전체 영역잡기 -->
+		<div class="contents">
+			<div class="div_movie">
+				<div id="div_table">
+					<table>
+						<colgroup>
+							<col width="100">
+							<col width="?">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>제목</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<footer id="page_footer">
+			<!-- footer영역 -->
+		</footer>
+	</div>
+</body>
+
+</html>

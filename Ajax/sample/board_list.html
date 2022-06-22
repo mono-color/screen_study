@@ -31,7 +31,7 @@
 		$(".div_paging_a").text("");
 
 		let boardList = localStorage.getItem("boardList");
-		console.log("boardList: ", boardList);
+		//console.log("boardList: ", boardList);
 
 		if (boardList !== null && boardList !== undefined && boardList !== "") {
 			let boardParse = JSON.parse(boardList);
@@ -52,7 +52,6 @@
 			}
 
 			let min_num = (paging_num * 10) - 9;
-
 			let max_num = (paging_num * 10);
 
 			console.log("min_num", min_num);
@@ -69,18 +68,51 @@
 
 				//클릭한 숫자가 1이거나 목록 버튼을 클릭해서 리스트 페이지로 온 경우
 				if (paging_num == 1) {
-					paging_output += "<a href='#' onclick='boardList("
-							+ (i + 1) + ")'>" + (i + 1) + "</a>";
+					if (i < 3) { // 0,1,2  -> 1,2,3페이지 나오게 처리
+						paging_output += "<a href='#' onclick='boardList(" + (i + 1) + ")'>" + (i + 1) + "</a>";
+					}
+				} else if (paging_num == parseInt(paging_cnt) + 1
+						|| paging_num == paging_cnt) {
+					//클릭한 숫자가 마지막 페이지 숫자인 경우
+					if (paging_num - 3 == i || paging_num - 2 == i
+							|| paging_num - 1 == i) {
+						paging_output += "<a href='#' onclick='boardList("
+								+ (i + 1) + ")'>" + (i + 1) + "</a>";
+					}
+				} else if (paging_num > 1
+						&& paging_num < parseInt(paging_cnt) + 1) {
+					//클릭한 숫자가 1보다 크고 마지막 페이지 숫자보다 작은 경우
+					if (paging_num - 2 == i || paging_num - 1 == i
+							|| paging_num == i) {
+						paging_output += "<a href='#' onclick='boardList("
+								+ (i + 1) + ")'>" + (i + 1) + "</a>";
+					}
 				}
-				//클릭한 숫자가 1보다 크고 마지막 페이지 숫자보다 작은 경우
 
-				//클릭한 숫자가 마지막 페이지 숫자인 경우
+				/* if (i == parseInt(paging_cnt)) {
+					paging_output += "&gt;&gt;";
+				} */
 
 				if (i == parseInt(paging_cnt)) {
-					paging_output += "&gt;&gt;";
+					// 마지막 페이지인 경우 +1을 하지 않는다.
+					if (paging_num == parseInt(paging_cnt) + 1) {
+						paging_output += "<a href='#' onclick='boardList("
+								+ (paging_num) + ")'>&gt;&gt;</a>";
+					} else {
+						//현재 클릭한 페이지가 마지막페이지가 아닌경우이며 +1 한다.
+						paging_output += "<a href='#' onclick='boardList("
+								+ (paging_num + 1) + ")'>&gt;&gt;</a>";
+					}
 				}
 			}
 			$(".div_paging_a").append(paging_output);
+
+			//글이 30개 이하인 경우 좌우 화살표 출력하지 않기
+			if (paging_cnt > basic_paging_cnt) {
+				$(".button_side").show();
+			} else {
+				$(".button_side").hide();
+			}
 
 			let output = "";
 			boardParse.reverse().forEach(

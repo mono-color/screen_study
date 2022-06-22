@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset='utf-8'>
+<title>NextIT</title>
+<link rel="icon" type="image/x-icon" href="./images/nextit_log.jpg" />
+<link rel="stylesheet" type="text/css" href="./css/header.css">
+<link rel="stylesheet" type="text/css" href="./css/footer.css">
+<link rel="stylesheet" type="text/css" href="./css/style_boardList.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+.button_div {
+	width: 1000px;
+	text-align: right;
+	margin-top: 20px;
+}
+</style>
+<script>
+	$(function() {
+		$(".top_nav").load("/sample01_ajax/header.do");
+		$("#page_footer").load("/sample01_ajax/footer.do");
+		//z6jw1epFn%2F0%2BC7yHzGcCm3VCdzsKPT1EIHx7Jh9Vy2xvv%2F094lLoG6MNSIPj86GO5QcnYMu3GFYjCwjYmWAnCg%3D%3D
+		//http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo?year=2020&pageNo=1&numOfRows=100&returnType=json&serviceKey=서비스키
+	
+		fineDust_json();
+		//fineDust_xml();
+				
+		
+
+	});
+	
+function fineDust_json(){
+	
+	let date = new Date();
+    let year01 = date.getFullYear().toString(); 
+    console.log("year01::"+year01);
+    
+	$.ajax({
+		type : "post",
+		data: { year: year01 },
+       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+		url : "/sample01_ajax/fineDust_json.do",
+		success : function(data) {
+			let fine_dust = JSON.parse(data).response.body.items;
+			
+			let temp; 
+            for(let i = 0; i < fine_dust.length-1; i++ ) {
+                for (let j = i+1; j < fine_dust.length; j++ ) {
+                    if(Number(fine_dust[j].issueVal) > Number(fine_dust[i].issueVal)) {
+                        temp = fine_dust[j];
+                        fine_dust[j] = fine_dust[i];
+                        fine_dust[i] = temp;
+                    }
+                }
+            }
+			
+			let insertHtml = "";
+			for(let i = 0; i < 10; i++){
+				insertHtml += "<tr>";
+				insertHtml += "<td>" + (i+1) + "</td>";
+				insertHtml += "<td>" + fine_dust[i].districtName + "</td>";
+				insertHtml += "<td>" + fine_dust[i].moveName + "</td>";
+				insertHtml += "<td>" + fine_dust[i].issueDate + "</td>";
+				insertHtml += "<td>" + fine_dust[i].issueGbn + "</td>";
+				insertHtml += "<td>" + fine_dust[i].issueVal + "</td>";
+				insertHtml += "</tr>";
+			}
+			console.log("insertHtml : ", insertHtml);
+			$("#div_fineDust tbody").html(insertHtml);
+			
+		},
+		error : function(e) {
+			console.log("error : " + e.status);
+		}
+	});
+}
+
+function fineDust_xml(){
+	console.log("fineDust_xml");
+	
+	$.ajax({
+		type: "post"
+		,url: "/sample01_ajax/fineDust_xml.do"
+		,success:function(data){
+			alert("success");
+			console.log(data);
+			
+			let xml_data = new DOMParser();
+			let xmlDoc = xml_data.parseFromString(data, "text/xml");
+			console.log("xmlDoc : ", xmlDoc);
+			let item_tag = xmlDoc.getElementsByTagName("item");
+			console.log("item_tag,length: ", item_tag,length);
+			
+			let insertHtml = "";
+			for(let i = 0; i < 10; i++){
+				insertHtml += "<tr>";
+				insertHtml += "<td>" + item_tag[i].getElementsByTagName("districtName")[0].childNodes[0].nodeValue + "</td>";
+				insertHtml += "<td>" + item_tag[i].getElementsByTagName("moveName")[0].childNodes[0].nodeValue + "</td>";
+				insertHtml += "<td>" + item_tag[i].getElementsByTagName("issueDate")[0].childNodes[0].nodeValue + "</td>";
+				insertHtml += "<td>" + item_tag[i].getElementsByTagName("issueGbn")[0].childNodes[0].nodeValue + "</td>";
+				insertHtml += "<td>" + item_tag[i].getElementsByTagName("issueVal")[0].childNodes[0].nodeValue + "</td>";
+				insertHtml += "</tr>";
+			}
+			console.log("insertHtml: ", insertHtml);
+			$("#div_table > table >tbody").html(insertHtml);
+		}
+		,error:function(){
+			alert("error");
+		}
+	})
+}
+	
+</script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header">
+			<div class="top_nav">
+				<!-- header영역 -->
+			</div>
+		</div>
+		<!-- header e -->
+
+		<div class="intro_bg">
+			<div class="intro_text">
+				<h1>NextIT</h1>
+				<h4>넥스트아이티</h4>
+			</div>
+		</div>
+		<!-- intro_bg e -->
+
+		<!-- 전체 영역잡기 -->
+		<div class="contents">
+			<div id="div_fineDust">
+				<div id="div_table">
+					<table>
+						<thead>
+							<tr>
+								<th>NO</th>
+								<th>지역</th>
+								<th>검측장소</th>
+								<th>일시</th>
+								<th>구분</th>
+								<th>수치</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 미세먼지 리스트 -->
+						</tbody>
+					</table>
+				</div>
+				<div class="button_div">
+					<input type="button" onclick="fineDust_json()" value="fineDust_json"/>
+					<input type="button" onclick="fineDust_xml()" value="fineDust_xml"/>
+				</div>
+			</div>
+
+		</div>
+
+
+		<footer id="page_footer">
+			<!-- footer영역 -->
+		</footer>
+	</div>
+</body>
+</html>
